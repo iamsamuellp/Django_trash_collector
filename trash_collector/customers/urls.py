@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from django.contrib import admin
 
 from . import views
@@ -9,7 +9,7 @@ app_name = "customers"
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('new/', views.create, name="accounts:register"),
+    path('new/', views.create, name="register")
       
 ]
 # path('account_details/', views.account_details, name="account_details"),

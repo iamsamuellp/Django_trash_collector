@@ -15,14 +15,14 @@ from django.urls import reverse
 def index(request):
     # The following line will get the logged-in in user (if there is one) within any view function
     user = request.user
-    login_customer = Customer.objects.all()
-    context = {
-        'login_customer': login_customer
-    }
-
-    try:
-        # This line inside the 'try' will return the customer record of the logged-in user if one exists
+          
+    
+    try: 
         logged_in_customer = Customer.objects.get(user=user)
+        context = { 
+        'logged_in_customer': logged_in_customer
+        # This line inside the 'try' will return the customer record of the logged-in user if one exists
+    }    
     except:
         # TODO: Redirect the user to a 'create' function to finish the registration process if no customer record found
         return HttpResponseRedirect(reverse('customers:register'))
@@ -30,22 +30,25 @@ def index(request):
 
     # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
 def create(request):
+    Customer = ''
     if request.method == 'POST':
         name = request.POST.get('name')
         user = request.ForeignKey('accounts.User', blank=True, null=True, on_delete=request.CASCADE)
         street_address = request.POST.get('street_address')
         zip_code = request.POST.get('zip_code')
-        # weekly_pickup = request.POST.get('weekly_pickup')
+        #weekly_pickup = request.POST.get('weekly_pickup')
         one_time_pickup = request.POST.get('one_time_pickup')
         new_customer = Customer(name=name, zip_code=zip_code, street_address=street_address, one_time_pickup=one_time_pickup)
         new_customer.save()
-        # return HttpResponseRedirect(reverse('customers:index'))
+        return HttpResponseRedirect(reverse('customers:index'))
+
     else:
         Customer = apps.get_model('customers.Customers')
         all_customers = Customer.objects.all()
-        return render(request, 'customers/create.html', {'all_customers': all_customers})
-    print(user)
-    return render(request, 'customers/index.html')
+        return render(request, 'customers/register.html')
+        
+    # print(user)
+    # return render(request, 'customers/index.html')
 
 # def detail(request, customer_id):
 #     customer_from_db = Customer.objects.get(pk=customer_id)
