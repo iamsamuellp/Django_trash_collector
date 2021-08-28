@@ -10,9 +10,9 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
     path('new/', views.create, name="register"),
-    path('account_details/', views.account_details, name="account_details"),
-    path('new_pickup_day/', views.new_pickup_day, name="new_pickup_day"),
-    path('suspend_service/', views.suspend, name='suspend_service'),
-    path('pickup/', views.pickup, name="pickup")    
+    # path('account_details/', views.account_details, name="account_details"),
+    # path('new_pickup_day/', views.new_pickup_day, name="new_pickup_day"),
+    # path('suspend_service/', views.suspend, name='suspend_service'),
+    # path('pickup/', views.pickup, name="pickup")    
 
 ]
