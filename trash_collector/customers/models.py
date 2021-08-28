@@ -16,3 +16,5 @@ class Customer(models.Model):
     suspend_start = models.DateField(default=django.utils.timezone.now, null=True)
     suspend_end = models.DateField(default=django.utils.timezone.now, null=True)
  
+    def __str__(self):
+        return self.name

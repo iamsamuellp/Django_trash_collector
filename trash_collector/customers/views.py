@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django.apps import apps
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Customer
 from django.urls import reverse
 
@@ -26,7 +26,7 @@ def index(request):
     except:
         # TODO: Redirect the user to a 'create' function to finish the registration process if no customer record found
         return HttpResponseRedirect(reverse('customers:register'))
-    return render, 'customers/index.html', context
+    return render(request,'customers/index.html', context)
 
     # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
 def create(request):
@@ -37,8 +37,9 @@ def create(request):
         zip_code = request.POST.get('zip_code')
         # weekly_pickup = request.POST.get('weekly_pickup')
         one_time_pickup = request.POST.get('one_time_pickup')
-        new_customer = Customer(name=name, zip_code=zip_code, street_address=street_address, weekly_pickup=weekly_pickup, one_time_pickup=one_time_pickup)
+        new_customer = Customer(name=name, zip_code=zip_code, street_address=street_address, one_time_pickup=one_time_pickup)
         new_customer.save()
+        # return HttpResponseRedirect(reverse('customers:index'))
     else:
         Customer = apps.get_model('customers.Customers')
         all_customers = Customer.objects.all()
