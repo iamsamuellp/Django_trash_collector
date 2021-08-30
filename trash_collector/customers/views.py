@@ -30,27 +30,27 @@ def index(request):
 
     # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
 def create(request):
-    Customer = ''
+    
     if request.method == 'POST':
         name = request.POST.get('name')
-        user = request.ForeignKey('accounts.User', blank=True, null=True, on_delete=request.CASCADE)
+        user = request.user
         street_address = request.POST.get('street_address')
         zip_code = request.POST.get('zip_code')
-        #weekly_pickup = request.POST.get('weekly_pickup')
+        weekly_pickup = request.POST.get('weekly_pickup')
         one_time_pickup = request.POST.get('one_time_pickup')
-        new_customer = Customer(name=name, zip_code=zip_code, street_address=street_address, one_time_pickup=one_time_pickup)
+        new_customer = Customer(name=name, user=user, zip_code=zip_code, street_address=street_address, one_time_pickup=one_time_pickup)
         new_customer.save()
         return HttpResponseRedirect(reverse('customers:index'))
 
     else:
-        Customer = apps.get_model('customers.Customers')
-        all_customers = Customer.objects.all()
+        # Customer = apps.get_model('customers.Customers')
+        # all_customers = Customer.objects.all()
         return render(request, 'customers/register.html')
         
     # print(user)
     # return render(request, 'customers/index.html')
 
-# def detail(request, customer_id):
-#     customer_from_db = Customer.objects.get(pk=customer_id)
-#     return render(request, 'customers/detail.html', {'customer_from_db'})
+def detail(request): 
+    user = request.user
+    return render(request, 'customers/detail.html', {'user': user})
 

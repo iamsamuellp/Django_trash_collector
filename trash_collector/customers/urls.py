@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 from . import views
 
@@ -9,7 +10,9 @@ app_name = "customers"
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('new/', views.create, name="register")
+    path('new/', views.create, name="register"),
+    path('detail/', views.detail, name="detail"),
+    path('', RedirectView.as_view(url = '/customers/'))
       
 ]
 # path('account_details/', views.account_details, name="account_details"),
