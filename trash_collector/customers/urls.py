@@ -10,7 +10,7 @@ app_name = "customers"
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('new/', views.create, name="register"),
+    path('new/', views.create, name="create"),
     path('detail/', views.detail, name="detail"),
     path('', RedirectView.as_view(url = '/customers/'))
       

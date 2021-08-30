@@ -25,7 +25,7 @@ def index(request):
     }    
     except:
         # TODO: Redirect the user to a 'create' function to finish the registration process if no customer record found
-        return HttpResponseRedirect(reverse('customers:register'))
+        return HttpResponseRedirect(reverse('customers:create'))
     return render(request,'customers/index.html', context)
 
     # It will be necessary while creating a Customer/Employee to assign request.user as the user foreign key
@@ -43,9 +43,8 @@ def create(request):
         return HttpResponseRedirect(reverse('customers:index'))
 
     else:
-        # Customer = apps.get_model('customers.Customers')
-        # all_customers = Customer.objects.all()
-        return render(request, 'customers/register.html')
+      
+        return render(request, 'customers/create.html')
         
     # print(user)
     # return render(request, 'customers/index.html')

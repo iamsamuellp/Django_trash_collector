@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Details Page {% endblock %}
+{% block title %} Customer Details {% endblock %}
 
 {% block header %} Customer Account Details {% endblock %}
 
@@ -10,8 +10,7 @@
 <form action="{% url 'customers:index' %}" method = "POST">
   {% csrf_token %}
   <h1>Your account details are listed below.</h1>
-  <p><a href="{% url 'logout' %}">Home</a></p>
-    <table>
+      <table>
         <tr><td> Name:</td><td>{{customer.name}}</td></tr><br>
         <tr><td> Address:</td><td>{{customer.address}}</td></tr><br>
         <tr><td> Zip Code:</td><td> {{customer.zip_code}}</td></tr><br>
@@ -22,6 +21,6 @@
         <tr><td> Account Balance: </td><td>{{customer.balance}}</td></tr><br>
     </table>
   </table> 
-
+  <p><a href="{% url 'logout' %}">Sign Out</a></p>
   
 {% endblock %}
