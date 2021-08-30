@@ -43,14 +43,33 @@ def create(request):
         return HttpResponseRedirect(reverse('customers:index'))
 
     else:
-        # Customer = apps.get_model('customers.Customers')
-        # all_customers = Customer.objects.all()
+        
         return render(request, 'customers/register.html')
         
     # print(user)
     # return render(request, 'customers/index.html')
 
-def detail(request): 
+def detail(request):
     user = request.user
+    customer = Customer.objects.get(user=user)
+    context = {'customer':customer}
     return render(request, 'customers/detail.html', {'user': user})
+
+
+def change_pickup(request):
+     user = request.user
+     customer = Customer.objects.get(user=user)
+     if request.method == 'POST':
+        change_pickup = request.POST.get('change_pickup')
+        customer.weekly_pickup = change_pickup
+        customer.save()
+        return HttpResponseRedirect(reverse('customers:index'))
+
+     else:
+        context ={'customer':customer}
+        return render(request, 'customers/change_pickup.html',context)
+        
+    
+
+
 

@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('new/', views.create, name="register"),
     path('detail/', views.detail, name="detail"),
+    path('change_pickup/', views.change_pickup, name="change_pickup"),
     path('', RedirectView.as_view(url = '/customers/'))
       
 ]
