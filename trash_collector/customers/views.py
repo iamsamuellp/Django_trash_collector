@@ -14,9 +14,7 @@ from django.urls import reverse
 
 def index(request):
     # The following line will get the logged-in in user (if there is one) within any view function
-    user = request.user
-          
-    
+    user = request.user         
     try: 
         logged_in_customer = Customer.objects.get(user=user)
         context = { 
@@ -46,25 +44,31 @@ def create(request):
       
         return render(request, 'customers/create.html')
         
-    # print(user)
-    # return render(request, 'customers/index.html')
+    
 
 def detail(request):
     user = request.user
-    customer = Customer.objects.get(user=user)
-    context = {'customer':customer}
-    return render(request, 'customers/detail.html', {'user': user})
+    logged_in_customer = Customer.objects.get(user=user)
+    context = { 
+        'logged_in_customer': logged_in_customer
+    }    
+    return render(request, 'customers/detail.html', {'customer': logged_in_customer})
+     
+
+        
+    # customer = Customer.objects.get(user=user)
+    # context = {'customer':customer}
 
 
-def change_pickup(request):
-     user = request.user
-     customer = Customer.objects.get(user=user)
-     if request.method == 'POST':
-        change_pickup = request.POST.get('change_pickup')
-        customer.weekly_pickup = change_pickup
-        customer.save()
-        return HttpResponseRedirect(reverse('customers:index'))
+# def change_pickup(request):
+#      user = request.user
+#      customer = Customer.objects.get(user=user)
+#      if request.method == 'POST':
+#         change_pickup = request.POST.get('change_pickup')
+#         customer.weekly_pickup = change_pickup
+#         customer.save()
+#         return HttpResponseRedirect(reverse('customers:index'))
 
-     else:
-        context ={'customer':customer}
-        return render(request, 'customers/change_pickup.html',context)
+#      else:
+#         context ={'customer':customer}
+#         return render(request, 'customers/change_pickup.html',context)

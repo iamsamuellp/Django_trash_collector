@@ -16,7 +16,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url = '/customers/'))
       
 ]
-# path('account_details/', views.account_details, name="account_details"),
+    # path('account_details/', views.account_details, name="account_details"),
     # path('new_pickup_day/', views.new_pickup_day, name="new_pickup_day"),
     # path('suspend_service/', views.suspend, name='suspend_service'),
     # path('pickup/', views.pickup, name="pickup")  
