@@ -1,0 +1,19 @@
+{% block title %} Suspend Service {% endblock %}
+
+{% block header %} Suspend service Request {% endblock %}
+
+{% block content %}
+
+
+
+
+<form action="{% url 'customers:suspend' %}" method = "POST">
+  {%csrf_token%}
+
+  Suspend Start:  <input type="date" name='{{customer.suspend_start}}' name="suspend_start" id="suspend_start"><br>
+  <input type="submit" value="Submit!">
+  Suspend End:  <input type="date" name='{{customer.suspend_end}}' name="suspend_end" id="suspend_end"><br>
+  <input type="submit" value="Submit!">
+</form>
+
+{% endblock %}

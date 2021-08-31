@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Change Pick-Up {% endblock %}
+
+{% block header %} Change Pick-Up Request {% endblock %}
+
+{% block content %}
+<form action="{% url 'customers:pickup' %}" method = "POST">
+  {%csrf_token%}
+
+  Enter your one time pickup: <input type="text" name='{{customer.pickup}}' name="pickup" id="pickup"><br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
