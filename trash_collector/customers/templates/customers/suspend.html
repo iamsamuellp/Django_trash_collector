@@ -3,9 +3,7 @@
 {% block header %} Suspend service Request {% endblock %}
 
 {% block content %}
-
-
-
+<p><a href="{% url 'home' %}">Home</a></p>
 
 <form action="{% url 'customers:suspend' %}" method = "POST">
   {%csrf_token%}

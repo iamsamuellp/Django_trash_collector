@@ -5,10 +5,11 @@
 {% block header %} Change Pick-Up Request {% endblock %}
 
 {% block content %}
+<p><a href="{% url 'home' %}">Home</a></p>
 <form action="{% url 'customers:change_pickup' %}" method = "POST">
   {%csrf_token%}
-  Your pickup date is: {{customer.weekly_pickup}} <br>
-  Enter your new weekly pickup: <input type="text" name='{{customer.change_pickup}}' name="change_pickup" id="change_pickup"><br>
+  Your pickup day is: {{customer.weekly_pickup}} <br>
+  Enter your new weekly pickup day: <input type="text" name='{{customer.change_pickup}}' name="change_pickup" id="change_pickup"><br>
     <input type="submit" value="Update!">
 </form>
 {% endblock %}

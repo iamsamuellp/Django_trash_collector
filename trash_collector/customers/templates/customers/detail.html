@@ -10,7 +10,8 @@
   {% csrf_token %}
   <h2>Your account details are listed below.</h2>
   <a href="{% url 'customers:index' %}">Home</a>
-  
+  <a href="{% url 'customers:change_pickup' %}">Change Weekly Pickup </a>
+  <a href="{% url 'customers:pickup' %}">One-Day Pickup </a>
   <table>
         <tr><td> Name:</td><td>{{customer}}</td></tr><br>
         <tr><td> Street Address:</td><td>{{customer.street_address}}</td></tr><br>
