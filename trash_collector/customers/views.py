@@ -51,15 +51,8 @@ def detail(request):
     context = { 
         'logged_in_customer': logged_in_customer
     }    
-    return render(request, 'customers/detail.html', {'customer': logged_in_customer}, context)
+    return render(request, 'customers/detail.html', {'customer': logged_in_customer})
 
-# def change_pickup(request):
-#     user = request.user
-#     logged_in_customer = Customer.objects.get(user=user)
-#     context = { 
-#         'logged_in_customer': logged_in_customer
-#     }    
-#     return render(request, 'customers/change_pickup.html', {'customer': logged_in_customer}, context)
 
 def change_pickup(request):
      user = request.user
@@ -73,3 +66,27 @@ def change_pickup(request):
      else:
         context ={'customer':customer}
         return render(request, 'customers/change_pickup.html',context)
+
+def suspend(request):
+     user = request.user
+     customer = Customer.objects.get(user=user)
+     if request.method == 'POST':
+         customer.suspend_start = request.POST.get('suspend_start')
+         customer.suspend_end = request.POST.get('suspend_end')
+         customer.save()
+         return HttpResponseRedirect(reverse('customers:index'))
+     else:
+        context ={'customer':customer}
+        return render(request, 'customers/suspend.html',context)
+
+
+def pickup(request):
+     user = request.user
+     customer = Customer.objects.get(user=user)
+     if request.method == 'POST':
+         customer.pickup = request.POST.get('pickup')
+         customer.save()
+         return HttpResponseRedirect(reverse('customers:index'))
+     else:
+        context ={'customer':customer}
+        return render(request, 'customers/pickup.html',context)
