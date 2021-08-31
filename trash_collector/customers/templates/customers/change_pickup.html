@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %} Details Page {% endblock %}
+{% block title %} Change Pick-Up {% endblock %}
 
-{% block header %} Customer Account Details {% endblock %}
+{% block header %} Change Pick-Up Request {% endblock %}
 
 {% block content %}
-  
-
 <form action="{% url 'customers:change_pickup' %}" method = "POST">
-
   {%csrf_token%}
+  Your pickup date is: {{customer.weekly_pickup}} <br>
+  Enter your new weekly pickup: <input type="text" name='{{customer.change_pickup}}' name="change_pickup" id="change_pickup"><br>
+    <input type="submit" value="Update!">
+</form>
+{% endblock %}
 
-    Your pickup date is: {{customer.weekly_pickup}} <br>
-    Enter your new weekly pickup: <input type="text" name="change_pickup" id="change_pickup">
-
-    </form>
-
-    {% endblock %}

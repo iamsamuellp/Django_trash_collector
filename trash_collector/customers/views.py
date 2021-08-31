@@ -43,8 +43,7 @@ def create(request):
     else:
       
         return render(request, 'customers/create.html')
-        
-    
+   
 
 def detail(request):
     user = request.user
@@ -52,23 +51,25 @@ def detail(request):
     context = { 
         'logged_in_customer': logged_in_customer
     }    
-    return render(request, 'customers/detail.html', {'customer': logged_in_customer})
-     
-
-        
-    # customer = Customer.objects.get(user=user)
-    # context = {'customer':customer}
-
+    return render(request, 'customers/detail.html', {'customer': logged_in_customer}, context)
 
 # def change_pickup(request):
-#      user = request.user
-#      customer = Customer.objects.get(user=user)
-#      if request.method == 'POST':
-#         change_pickup = request.POST.get('change_pickup')
-#         customer.weekly_pickup = change_pickup
-#         customer.save()
-#         return HttpResponseRedirect(reverse('customers:index'))
+#     user = request.user
+#     logged_in_customer = Customer.objects.get(user=user)
+#     context = { 
+#         'logged_in_customer': logged_in_customer
+#     }    
+#     return render(request, 'customers/change_pickup.html', {'customer': logged_in_customer}, context)
 
-#      else:
-#         context ={'customer':customer}
-#         return render(request, 'customers/change_pickup.html',context)
+def change_pickup(request):
+     user = request.user
+     customer = Customer.objects.get(user=user)
+     if request.method == 'POST':
+        change_pickup = request.POST.get('change_pickup')
+        customer.weekly_pickup = change_pickup
+        customer.save()
+        return HttpResponseRedirect(reverse('customers:index'))
+
+     else:
+        context ={'customer':customer}
+        return render(request, 'customers/change_pickup.html',context)

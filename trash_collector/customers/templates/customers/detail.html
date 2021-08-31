@@ -6,11 +6,11 @@
 
 {% block content %}
   
-
-<!-- <form action="{% url 'customers:index' %}" method = "POST"> -->
+<form action="{% url 'customers:index' %}" method = "POST">
   {% csrf_token %}
   <h2>Your account details are listed below.</h2>
   <a href="{% url 'customers:index' %}">Home</a>
+  
   <table>
         <tr><td> Name:</td><td>{{customer}}</td></tr><br>
         <tr><td> Street Address:</td><td>{{customer.street_address}}</td></tr><br>
