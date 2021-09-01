@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block header %} Employee Daily View {% endblock %}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+  <br><br>
+    <h2> Here are the customers on your route today: </h2>
+    <table>
+      <tr><td> Name:</td><td>{{customer}}</td></tr><br>
+      <tr><td> Street Address:</td><td>{{customer.street_address}}</td></tr><br>
+      <tr><td> Zip Code:</td><td> {{customer.zip_code}}</td></tr><br>
+      <tr><td> Weekly Pickup:</td><br>
+      <tr><td> Account Balance: </td>
+    </table>
+
+    <table>
+      {% for customer in my_customers %}
+      {% if weekday == customer.weekly_pickup_day%}
+      <form action = "{% url 'employees:daily_route' %}" name="add_payment" id="add_payment" method='POST'>
+        {% csrf_token %}
+      
+      
+      
+
+
+
+
+
+     
+    </table>
+    {% endif %}  
+    {% endblock %}

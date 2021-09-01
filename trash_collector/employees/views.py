@@ -22,7 +22,7 @@ def index(request):
         
         
     except:
-        return HttpResponseRedirect(reverse('employees:login.html'))
+        return HttpResponseRedirect(reverse('employees:create'))
 
     context = {'logged_in_employee': logged_in_employee,
                 'all_customers':all_customers
@@ -40,3 +40,37 @@ def create(request):
     else:
         return render(request, 'employees/create.html')
 
+
+def confirm(request, user_id):
+    Customers = apps.get_model('customers.Customer')
+    customer_charge = Customers.objects.get(pk = user_id)
+    context = { 'new_balance': customer_charge}
+    if request.method == 'POST':
+        if customer_charge.balance == None:
+            customer_charge.balance = 0
+        customer_charge.balance += 4
+        customer_charge.save()
+        return HttpResponseRedirect(reverse('employees:daily_view'))
+    else:
+        return render(request, 'employees/confirm.html', context)
+
+def daily_route(request):
+    user = request.user
+    logged_in_employee = Employee.objects.get(user=user)
+    Customers = apps.get_model('customers.Customer')
+    all_customers = Customers.objects.all()
+    two_date = date.today()
+    this_day = str(date.today())
+    weekday = request.POST.get('day_of_the_week')
+    todays_customers = []
+
+    for customer in all_customers: 
+        customer_suspend_start = str(customer.suspend_start)
+        customer_suspend_end = str(customer.suspend_end)
+        if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
+            if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup_day == weekday or customer.one_time_pickup == weekday) :
+                todays_customers.append(customer)
+
+    context = { 'todays_customers' : todays_customers,
+                'weekday': weekday}
+    return render(request, 'employees/day_route.html', context)        
