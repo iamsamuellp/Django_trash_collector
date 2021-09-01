@@ -7,10 +7,11 @@
 {% block content %}
 <p><a href="{% url 'home' %}">Home</a></p>
 
-<form action="{% url 'customers:detail' %}" method = "POST">
+<form action="{% url 'customers:pickup' %}" method = "POST">
   {%csrf_token%}
 
-  Enter the date for your one time pickup: <input type="date" name='{{customer.pickup}}' name="pickup" id="pickup"><br>
-    <input type="submit" value="Submit">
+  Enter the date for your one-time pickup: <input type="date" value='{{customer.one_time_pickup}}' name="one_time_pickup" id="one_time_pickup"><br>
+    <input type="submit" value="Submit!">
 </form>
+
 {% endblock %}

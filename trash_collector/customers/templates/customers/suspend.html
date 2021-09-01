@@ -7,11 +7,11 @@
 {% block content %}
 <p><a href="{% url 'home' %}">Home</a></p>
 
-<form action="{% url 'customers:detail' %}" method = "POST">
+<form action="{% url 'customers:suspend' %}" method = "POST">
   {%csrf_token%}
 
-  Suspend Start:  <input type="date" name='{{customer.suspend_start}}' name="suspend_start" id="suspend_start"><br>
-  Suspend End:  <input type="date" name='{{customer.suspend_end}}' name="suspend_end" id="suspend_end"><br>
+  Suspend Start:  <input type="date" value='{{customer.suspend_start}}' name="suspend_start" id="suspend_start"><br>
+  Suspend End:  <input type="date" value='{{customer.suspend_end}}' name="suspend_end" id="suspend_end"><br>
   <input type="submit" value="Submit!">
 </form>
 

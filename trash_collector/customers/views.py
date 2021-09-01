@@ -65,7 +65,7 @@ def change_pickup(request):
 
      else:
         context ={'customer':customer}
-        return render(request, 'customers/change_pickup.html',context)
+        return render(request, 'customers/change_pickup.html', context)
 
 def suspend(request):
      user = request.user
@@ -84,7 +84,7 @@ def pickup(request):
      user = request.user
      customer = Customer.objects.get(user=user)
      if request.method == 'POST':
-         customer.pickup = request.POST.get('pickup')
+         customer.one_time_pickup = request.POST.get('one_time_pickup')
          customer.save()
          return HttpResponseRedirect(reverse('customers:index'))
      else:
