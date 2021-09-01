@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} New Employent Set-up {% endblock %}
+{% block header %} New Employment Set-Up {% endblock %}
+
+{% block content %}
+
+<form action="{% url 'employees:create' %}" method = "POST">
+  {% csrf_token %}
+
+  <h2>Please fill out the following info: </h2><br>
+  <table>
+    <tr><td> Name:</td><td> <input type = "text" name = "name" id="name"></td></tr><br>
+    <tr><td> Zip Code:</td><td> <input type = "text" name = "zip_code" id="zip_code"></td></tr><br>
+    <input type = "submit" value="Create Account">
+  </form>
+
+  {% endblock %}

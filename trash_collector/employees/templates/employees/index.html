@@ -6,6 +6,28 @@
 {% csrf_token %}
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}!
+  <h2>List of your route Today</h2>
+  <table>
+    <tr>
+      <th scope="col">Name:</th>
+      <th scope="col">Street_Address</th>
+      <th scope="col">Weekly_Pickup</th>
+      <th scope="col">One_time_Pickup</th>
+      <th scope="col">suspend_start</th>
+      <th scope="col">suspend_end</th>
+    </tr>
+  </table>
+    <table>
+      {% for customers in all_customers %}
+        <td>{{customer.name}}</td></tr><br>
+        <td>{{customer.street_address}}</td></tr><br>
+        <td> {{customer.zip_code}}</td></tr><br>
+        <td>{{customer.weekly_pickup}}</td></tr><br>
+        <td>{{customer.suspend_start}}</td></tr><br>
+        <td>{{customer.suspend_end}}</td></tr><br>
+        <td>{{customer.change_pickup}}</td></tr><br>
+        <td>{{customer.balance}}</td></tr><br>
+    </table>
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>

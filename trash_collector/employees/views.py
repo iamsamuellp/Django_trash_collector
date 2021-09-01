@@ -1,6 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.apps import apps
+from django.http.response import HttpResponseRedirect
+from django.urls import reverse
+from .models import Employee
+from datetime import date
 
 # Create your views here.
 
@@ -10,21 +14,29 @@ from django.apps import apps
 def index(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
     Customer = apps.get_model('customers.Customer')
-    return render(request, 'employees/index.html')
+    all_customers = Customer.objects.all
+    user =request.user
     
     try: 
         logged_in_employee = Employee.objects.get(user=user)
-        context = { 
-        'logged_in_employee': logged_in_employee
-    }    
+        
+        
     except:
         return HttpResponseRedirect(reverse('employees:login.html'))
+
+    context = {'logged_in_employee': logged_in_employee,
+                'all_customers':all_customers
+        }
     return render(request,'employees/index.html', context)
 
-def customerdetails(request):
-    logged_in_employee = Employee.objects.get(user=user)
-    context = { 
-        'logged_in_employee': logged_in_employee
-    }    
-    return render(request,'employees/index.html', context)
+def create(request):
+    if request.method == 'POST':
+        user = request.user
+        name = request.POST.get('name')
+        zip_code = request.POST.get('zip_code')
+        new_employee = Employee(name = name, user = user, zip_code = zip_code)
+        new_employee.save()
+        return HttpResponseRedirect(reverse('employees:index'))
+    else:
+        return render(request, 'employees/create.html')
 
