@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} New Employent Set-up {% endblock %}
+{% block header %} New Employment Set-Up {% endblock %}
+
+{% block content %}
+
+<form action="{% url 'employees:confirm' charge_customer.id %}" method='POST'>
+  {% csrf_token %}
+  <h3> Confirm pickup for {{charge_customer.name}} at {{charge_customer.address}} </h3>
+  Confirm: <input type = 'checkbox' name='balance' id ='balance'><br>
+  <input type = 'submit' value = 'Add Charge'>
+</form>
+{% endblock %}
