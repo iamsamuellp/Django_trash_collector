@@ -2,13 +2,14 @@
 
 {% block title %} Change Pick-Up {% endblock %}
 
-{% block header %} Change Pick-Up Request {% endblock %}
+{% block header %} Change the Day of Your Weekly Pick-up {% endblock %}
 
 {% block content %}
-<p><a href="{% url 'home' %}">Home</a></p>
-<form action="{% url 'customers:change_pickup' %}" method = "POST">
+<p><a href="{% url 'home' %}">Home</a>
+
+<form action="{% url 'customers:detail' %}" method = "POST">
   {%csrf_token%}
-  Your pickup day is: {{customer.weekly_pickup}} <br>
+  Your current weekly pickup is on {{customer.weekly_pickup}} of every month.<br>
   Enter your new weekly pickup day: <input type="text" name='{{customer.change_pickup}}' name="change_pickup" id="change_pickup"><br>
     <input type="submit" value="Update!">
 </form>

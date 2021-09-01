@@ -8,7 +8,10 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello, {{ user.username }}! Welcome to your customer portal. Click the link to view your account details.
+    Hello, {{ user.username }}! Welcome to your customer portal. Here, you are able to view your account, adjust your trash pick-up day, and suspend services.<br>
+    <br>
+    Get started by clicking the link to view your account details.<br>
+
     <a href="{% url 'customers:detail' %}">Customer Account Details</a>
   {% else %}
     <p>You are at the customer index, but you are not logged in.</p>

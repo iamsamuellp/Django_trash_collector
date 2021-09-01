@@ -36,7 +36,7 @@ def create(request):
         zip_code = request.POST.get('zip_code')
         weekly_pickup = request.POST.get('weekly_pickup')
         one_time_pickup = request.POST.get('one_time_pickup')
-        new_customer = Customer(name=name, user=user, zip_code=zip_code, weekly_pickup=weekly_pickup, street_address=street_address, one_time_pickup=one_time_pickup)
+        new_customer = Customer(name=name, user=user, zip_code=zip_code, weekly_pickup=weekly_pickup,street_address=street_address, one_time_pickup=one_time_pickup)
         new_customer.save()
         return HttpResponseRedirect(reverse('customers:index'))
 
@@ -65,7 +65,7 @@ def change_pickup(request):
 
      else:
         context ={'customer':customer}
-        return render(request, 'customers/change_pickup.html', context)
+        return render(request, 'customers/change_pickup.html',context)
 
 def suspend(request):
      user = request.user
