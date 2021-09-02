@@ -17,7 +17,7 @@
         <tr><td> One-time Pickup: </td><td>{{customer.change_pickup}}</td></tr><br>
   </table>
     <table>
-      {% for customers in all_customers %}
+      {% for customer in todays_customers %}
       {% if weekday == customer.weekly_pickup_day%}
       <form action = "{% url 'employees:daily_route' %}" name="add_charge" id="add_charge" method='POST'>
         {% csrf_token %}
