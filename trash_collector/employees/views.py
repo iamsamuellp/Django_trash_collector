@@ -5,12 +5,6 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from .models import Employee
 from datetime import date
-# from django.contrib.auth.models import User
-# from django.filters import UserFilter
-
-# from django.views import generic
-
-
 
 # Create your views here.
 
@@ -22,28 +16,11 @@ def index(request):
     all_customers = Customer.objects.all()
     user =request.user
     logged_in_employee = Employee.objects.get(user=user)
-    Customers = apps.get_model('customers.Customer')
-    all_customers = Customers.objects.all()
-    two_date = date.today()
-    this_day = str(date.today())
-    weekday = request.POST.get('day_of_the_week')
-    todays_customers = []
-    for customer in all_customers: 
-        customer_suspend_start = str(customer.suspend_start)
-        customer_suspend_end = str(customer.suspend_end)
-        if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
-            if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup == weekday or customer.one_time_pickup == weekday) :
-                todays_customers.append(customer)
-
     try: 
         logged_in_employee = Employee.objects.get(user=user)       
-       
+        return HttpResponseRedirect(reverse('employees:daily_view')) 
     except:
         return HttpResponseRedirect(reverse('employees:create'))
-
-    context = { 'todays_customers' : todays_customers,
-                'weekday': weekday}
-    return render(request,'employees/index.html', context)
     
 
 def create(request):
@@ -70,39 +47,24 @@ def confirm(request, user_id):
         return HttpResponseRedirect(reverse('employees:daily_view'))
     else:
         return render(request, 'employees/confirm.html', context)
-
-# class CustomerList(generic.CustomerList):
-#         model = Customer
-#         template_name = 'customers/'
-#         context_object_name = 'weekly_pickup', 'zip_code', 'suspend'
-
-    # def get_daily_customers(request):
-    #     user = request.user
-    #     logged_in_employee = Employee.objects.get(user=user) 
-    #     Customers = apps.get_model('customers.Customer')
-    #     request.customer_customers = get_object_or_404(Customers, name=self.kwargs['customer'])
-    #     return Customer.objects.filter(customer=request.customers)
     
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['customer'] = request.customer.name
-    #     return context
+def daily_route(request): 
+    Customer = apps.get_model('customers.Customer')
+    all_customers = Customer.objects.all()
+    user =request.user
+    logged_in_employee = Employee.objects.get(user=user)
+    two_date = date.today()
+    this_day = str(date.today())
+    weekday = request.POST.get('day_of_the_week')
+    todays_customers = []
+    for customer in all_customers: 
+        customer_suspend_start = str(customer.suspend_start)
+        customer_suspend_end = str(customer.suspend_end)
+        if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
+            if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup == weekday or customer.one_time_pickup == weekday) :
+                todays_customers.append(customer)    
+    return HttpResponseRedirect(reverse('employees:daily_view'))
 
-
-    # Customers = apps.get_model('customers.Customer')
-    # all_customers = Customers.objects.all()
-    # two_date = date.today()
-    # this_day = str(date.today())
-    # weekday = request.POST.get('day_of_the_week')
-    # todays_customers = []
-
-    # for customer in all_customers: 
-    #     customer_suspend_start = str(customer.suspend_start)
-    #     customer_suspend_end = str(customer.suspend_end)
-    #     if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
-    #         if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup_day == weekday or customer.one_time_pickup == weekday) :
-    #             todays_customers.append(customer)
-
-    # context = { 'todays_customers' : todays_customers,
-    #             'weekday': weekday}
-    # return render(request, 'employees/day_route.html', context)   
+    context = { 'todays_customers' : todays_customers,
+                'weekday': weekday}
+    return render(request,'employees/index.html', context)

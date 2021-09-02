@@ -4,7 +4,6 @@
 {% block header %} Employee Home {% endblock %}
 
 {% block content %}
-{% csrf_token %}
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}!
   <h2>List of your routes today</h2>
@@ -24,7 +23,6 @@
           <tr><td> One-time Pickup: </td><td>{{customer.one_time_pickup}}</td></tr><br>
           <tr><td> Account Balance: </td><td>{{customer.balance}}</td></tr><br>
 
-    {% endfor %}
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>

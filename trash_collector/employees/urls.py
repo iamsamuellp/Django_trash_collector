@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('new/', views.create, name="create"),
     path('confirm/', views.confirm, name="confirm"),
-    # path('daily_route/', views.daily_route, name="daily_route"),
+    path('daily_route/', views.daily_route, name="daily_route")
 
 
     
