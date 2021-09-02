@@ -5,7 +5,9 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from .models import Employee
 from datetime import date
-# from django.shortcuts import get_object_or_404
+# from django.contrib.auth.models import User
+# from django.filters import UserFilter
+
 # from django.views import generic
 
 
@@ -19,17 +21,27 @@ def index(request):
     Customer = apps.get_model('customers.Customer')
     all_customers = Customer.objects.all()
     user =request.user
-    
+    two_date = date.today()
+    this_day = (date.today())
+    weekly_pickup = request.POST.get('day_of_the_week')
+    todays_customers = []
+
+    for customer in all_customers: 
+        customer_suspend_start = (customer.suspend_start)
+        customer_suspend_end = (customer.suspend_end)
+        if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
+            if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup == weekday or customer.one_time_pickup == weekday) :
+                todays_customers.append(customer)
     try: 
         logged_in_employee = Employee.objects.get(user=user)       
        
     except:
         return HttpResponseRedirect(reverse('employees:create'))
 
-    context = {'logged_in_employee': logged_in_employee,
-                'all_customers':all_customers
-        }
-    return render(request,'employees/index.html', context)
+        context = { 'todays_customers' : todays_customers,
+                'weekday': weekday}
+        return render(request, 'employees/index.html', context)        
+
 
 def create(request):
     if request.method == 'POST':
@@ -55,27 +67,6 @@ def confirm(request, user_id):
         return HttpResponseRedirect(reverse('employees:daily_view'))
     else:
         return render(request, 'employees/confirm.html', context)
-
-def daily_route(request):
-    user = request.user
-    logged_in_employee = Employee.objects.get(user=user)
-    Customers = apps.get_model('customers.Customer')
-    all_customers = Customers.objects.all()
-    two_date = date.today()
-    this_day = str(date.today())
-    weekly_pickup = request.POST.get('day_of_the_week')
-    todays_customers = []
-
-    for customer in all_customers: 
-        customer_suspend_start = (customer.suspend_start)
-        customer_suspend_end = (customer.suspend_end)
-        if  this_day < customer_suspend_start or this_day > customer_suspend_end:     
-            if customer.zip_code == logged_in_employee.zip_code and (customer.weekly_pickup == weekday or customer.one_time_pickup == weekday) :
-                todays_customers.append(customer)
-
-    context = { 'todays_customers' : todays_customers,
-                'weekday': weekday}
-    return render(request, 'employees/daily_route.html', context)        
 
 # class CustomerList(generic.CustomerList):
 #         model = Customer

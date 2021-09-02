@@ -9,7 +9,7 @@
     Hello Employee {{ user.username }}!
   <h2>List of your routes today</h2>
     <table>
-      {% for customer in all_customers %}         
+      {% for customer in todays_customers %}         
     <table>
       <tr><td> Name:</td><td>{{customer}}</td></tr><br>
       <tr><td> Zip Code:</td><td> {{customer.zip_code}}</td></tr><br>
