@@ -53,7 +53,6 @@ def detail(request):
     }    
     return render(request, 'customers/detail.html', {'customer': logged_in_customer})
 
-
 def change_pickup(request):
      user = request.user
      customer = Customer.objects.get(user=user)
@@ -61,7 +60,7 @@ def change_pickup(request):
         change_pickup = request.POST.get('change_pickup')
         customer.weekly_pickup = change_pickup
         customer.save()
-        return HttpResponseRedirect(reverse('customers:index'))
+        return HttpResponseRedirect(reverse('customers:detail'))
 
      else:
         context ={'customer':customer}
@@ -74,11 +73,10 @@ def suspend(request):
          customer.suspend_start = request.POST.get('suspend_start')
          customer.suspend_end = request.POST.get('suspend_end')
          customer.save()
-         return HttpResponseRedirect(reverse('customers:index'))
+         return HttpResponseRedirect(reverse('customers:detail'))
      else:
         context ={'customer':customer}
         return render(request, 'customers/suspend.html',context)
-
 
 def pickup(request):
      user = request.user
@@ -86,7 +84,15 @@ def pickup(request):
      if request.method == 'POST':
          customer.one_time_pickup = request.POST.get('one_time_pickup')
          customer.save()
-         return HttpResponseRedirect(reverse('customers:index'))
+         return HttpResponseRedirect(reverse('customers:detail'))
      else:
         context ={'customer':customer}
         return render(request, 'customers/pickup.html',context)
+
+# def delete(request):
+#     user = request.user
+#     customer = Customer.objects.get(user=user)
+#     customer.delete()
+#     return HttpResponseRedirect(reverse('players:detail'))
+
+    # , suspend_start, suspend_end, one_time_pickup

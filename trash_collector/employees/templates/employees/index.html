@@ -1,45 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %} Employee Home{% endblock %}
+{% block header %} Employee Home {% endblock %}
 
 {% block content %}
 {% csrf_token %}
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}!
-  <h2>List of your route Today</h2>
-  <table>
-
-        <tr><td> Name:</td><td>{{customer}}</td></tr><br>
-        <tr><td> Street Address:</td><td>{{customer.street_address}}</td></tr><br>
-        <tr><td> Weekly Pickup:</td><td>{{customer.weekly_pickup}}</td></tr><br>
-        <tr><td> Suspend Service Start: </td><td>{{customer.suspend_start}}</td></tr><br>
-        <tr><td> Suspend Service End: </td><td>{{customer.suspend_end}}</td></tr><br>
-        <tr><td> One-time Pickup: </td><td>{{customer.change_pickup}}</td></tr><br>
-  </table>
+  <h2>List of your routes today</h2>
     <table>
       {% for customer in todays_customers %}
       {% if weekday == customer.weekly_pickup_day%}
       <form action = "{% url 'employees:daily_route' %}" name="add_charge" id="add_charge" method='POST'>
         {% csrf_token %}
 
-        <td>{{customer.name}}</td>
-        <td>{{customer.street_address}}</td>
-        <td>{{customer.zip_code}}</td>
-        <td>{{customer.weekly_pickup}}</td>
-        <td>{{customer.suspend_start}}</td>
-        <td>{{customer.suspend_end}}</td>
-        <td>{{customer.change_pickup}}</td>
-        <td>{{customer.balance}}</td>
-    </table>
-    {% endif %} 
+        {% for customer in all_customers %}         
+        <table>
+          <tr><td> Name:</td><td>{{customer}}</td></tr><br>
+          <tr><td> Zip Code:</td><td> {{customer.zip_code}}</td></tr><br>
+          <tr><td> Weekly Pickup:</td><td>{{customer.weekly_pickup}}</td></tr><br>
+          <tr><td> Suspend Service Start: </td><td>{{customer.suspend_start}}</td></tr><br>
+          <tr><td> Suspend Service End: </td><td>{{customer.suspend_end}}</td></tr><br>
+          <tr><td> One-time Pickup: </td><td>{{customer.one_time_pickup}}</td></tr><br>
+          <tr><td> Account Balance: </td><td>{{customer.balance}}</td></tr><br>
+
     {% endfor %}
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-
-
-
 
 {% endblock %}

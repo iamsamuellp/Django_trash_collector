@@ -15,8 +15,8 @@
     </table>
 
     <table>
-      {% for customer in my_customers %}
-      {% if weekday == customer.weekly_pickup_day%}
+      {% for customer in all_customers %}
+      {% if weekday == customer.weekly_pickup %}
       <form action = "{% url 'employees:daily_route' %}" name="add_payment" id="add_payment" method='POST'>
         {% csrf_token %}
       
